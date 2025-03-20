@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>合同对比工具</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h1 { text-align: center; }
+        .container {
+            display: flex;
+            justify-content: space-between;
+        }
+        .box {
+            width: 48%;
+        }
+        textarea {
+            width: 100%;
+            height: 200px;
+        }
+        .same { color: green; font-weight: bold; } /* 相同部分绿色 */
+        .diff { color: gray; } /* 不同部分灰色 */
+        .result-box {
+            border: 1px solid black;
+            padding: 10px;
+            height: 500px;  /* 增大对比结果区域 */
+            overflow-y: auto; /* 竖向滚动 */
+            overflow-x: hidden;
+            font-family: monospace;
+            line-height: 28px; /* 固定行距 */
+            white-space: pre-wrap; /* 允许换行 */
+        }
+    </style>
+</head>
+<body>
+
+<h1>合同对比工具</h1>
+
+<!-- 固定模板和新合同输入 -->
+<div class="container">
+    <div class="box">
+        <h2>📄 固定合同模板（可修改）</h2>
+        <form method="post">
+            <textarea name="template_text">{{ fixed_template }}</textarea><br>
+            <button type="submit">保存模板</button>
+        </form>
+    </div>
+
+    <div class="box">
+        <h2>📑 粘贴新合同进行对比</h2>
+        <form method="post">
+            <textarea name="contract_text"></textarea><br>
+            <button type="submit">开始对比</button>
+        </form>
+    </div>
+</div>
+
+<!-- 对比结果 -->
+{% if fixed_result and new_result %}
+<h2>📌 对比结果：</h2>
+<div class="container">
+    <div class="box">
+        <h3>🔍 固定模板</h3>
+        <div class="result-box">{{ fixed_result|safe }}</div>
+    </div>
+
+    <div class="box">
+        <h3>🆕 新合同</h3>
+        <div class="result-box">{{ new_result|safe }}</div>
+    </div>
+</div>
+{% endif %}
+
+</body>
+</html>
