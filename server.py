@@ -1,10 +1,9 @@
-import webbrowser
-from flask import Flask, request, jsonify,render_template
+from flask import Flask, request, render_template
 from flask_cors import CORS
 import difflib
-import threading
 
 app = Flask(__name__)
+CORS(app)  # 允许跨域请求，防止跨域问题
 
 # 计算最长公共子序列（LCS），保证精准对比
 def highlight_diff_lcs(text1, text2):
@@ -39,14 +38,9 @@ def index():
             new_contract = request.form["contract_text"]
             fixed_result, new_result = highlight_diff_lcs(fixed_template, new_contract)
 
-
     return render_template("index.html", fixed_template=fixed_template, fixed_result=fixed_result,
                            new_result=new_result)
 
-def open_browser():
-    """ 只在 Flask 第一次启动时打开浏览器 """
-    webbrowser.open("http://127.0.0.1:9000/")
 
 if __name__ == "__main__":
-    threading.Timer(1.5, open_browser).start()  # 1.5秒后自动打开浏览器
-    app.run(host="0.0.0.0", port=9000) # 取消 debug 模式，避免浏览器打开两次
+    app.run(host="0.0.0.0", port=10000)  # 监听 0.0.0.0:10000 端口，适配 Render
