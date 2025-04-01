@@ -45,8 +45,8 @@ def index():
 
 def open_browser():
     """ 只在 Flask 第一次启动时打开浏览器 """
-    webbrowser.open("http://127.0.0.1:5000/")
+    webbrowser.open("http://127.0.0.1:9000/")
 
 if __name__ == "__main__":
     threading.Timer(1.5, open_browser).start()  # 1.5秒后自动打开浏览器
-    app.run(debug=False)  # 取消 debug 模式，避免浏览器打开两次
+    app.run(host="0.0.0.0", port=9000) # 取消 debug 模式，避免浏览器打开两次
